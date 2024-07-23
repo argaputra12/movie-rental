@@ -60,9 +60,24 @@ class UserMovieController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function updateDuration(Request $request, string $id)
   {
-    //
+    $userMovie = UserMovie::find($id);
+
+    if (!$userMovie) {
+      return response()->json(["error" => "User Movie not found"], 404);
+    }
+
+    $userMovie->duration = $request->duration;
+
+    // If duration is zero, change status to "waiting"
+    if ($userMovie->duration <= 0) {
+        $userMovie->status = "waiting";
+    }
+
+    $userMovie->save();
+
+    return response()->json(["success" => "Movie updated successfully"]);
   }
 
   /**

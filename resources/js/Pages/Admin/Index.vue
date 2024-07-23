@@ -25,10 +25,10 @@ defineProps({
     required: true,
   },
   canLogin: {
-    type: Boolean,
+    type: Object,
   },
   canRegister: {
-    type: Boolean,
+    type: Object,
   },
 });
 

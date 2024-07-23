@@ -81,10 +81,10 @@ import { ref } from "vue";
 
 defineProps({
   canLogin: {
-    type: Boolean,
+    type: Object,
   },
   canRegister: {
-    type: Boolean,
+    type: Object,
   },
 });
 

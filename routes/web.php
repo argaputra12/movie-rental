@@ -55,6 +55,7 @@ Route::group(["prefix" => "admin", "middleware" => "admin"], function () {
 Route::prefix("movies")->group(function () {
   Route::post("/request-access", "App\Http\Controllers\UserMovieController@request")->name("admin.movies.request-access");
   Route::get("/watch/{id}", "App\Http\Controllers\UserMovieController@index")->name("admin.movies.watch");
+  Route::put("update-duration/{id}", "App\Http\Controllers\UserMovieController@updateDuration")->name("admin.movies.update-duration");
 });
 
 require __DIR__ . '/auth.php';
