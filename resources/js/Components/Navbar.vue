@@ -8,8 +8,11 @@
     <template #default="{ isShowMenu }">
       <fwb-navbar-collapse :is-show-menu="isShowMenu">
         <fwb-navbar-link is-active link="/"> Home </fwb-navbar-link>
+        <fwb-navbar-link is-active link="/admin"> Admin </fwb-navbar-link>
         <fwb-navbar-link is-active link="/admin/users"> Users </fwb-navbar-link>
-        <fwb-navbar-link is-active link="#"> Movies </fwb-navbar-link>
+        <fwb-navbar-link is-active link="/admin/movies">
+          Movies
+        </fwb-navbar-link>
         <fwb-navbar-link link="#" @click.prevent="logout" v-if="canLogin">
           Log out
         </fwb-navbar-link>

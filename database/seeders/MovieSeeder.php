@@ -63,8 +63,6 @@ class MovieSeeder extends Seeder
           ];
 
           foreach ($movies as $movie) {
-            // create random release date every movie
-            $movie["release_date"] = now()->subDays(rand(1, 100));
 
             Movie::create($movie);
           }

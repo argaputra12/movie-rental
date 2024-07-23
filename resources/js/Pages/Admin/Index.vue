@@ -31,6 +31,10 @@ defineProps({
     type: Boolean,
   },
 });
+
+const editMovieApprovalLink = (id) => {
+  return `/admin/movies/edit-approval/${id}`;
+};
 </script>
 
 <template>
@@ -67,14 +71,12 @@ defineProps({
                   userMovie.status
                 }}</fwb-table-cell>
                 <fwb-table-cell>
-                  {{
-                    userMovie.movie.duration
-                      ? userMovie.movie.duration
-                      : "No Duration"
-                  }}
+                  {{ userMovie.duration ? userMovie.duration : "No Duration" }}
                 </fwb-table-cell>
                 <fwb-table-cell>
-                  <fwb-a href="#"> Edit </fwb-a>
+                  <fwb-a :href="editMovieApprovalLink(userMovie.id)">
+                    Edit
+                  </fwb-a>
                 </fwb-table-cell>
               </fwb-table-row>
             </fwb-table-body>

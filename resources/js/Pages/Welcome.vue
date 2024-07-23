@@ -3,6 +3,11 @@ import { Head, Link } from "@inertiajs/vue3";
 import Navbar from "@/Components/Navbar.vue";
 import { FwbButton, FwbA, FwbCard } from "flowbite-vue";
 import { defineProps } from "vue";
+import axios from "axios";
+import { useToast } from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
+
+const $toast = useToast();
 
 defineProps({
   movies: {
@@ -18,6 +23,18 @@ defineProps({
     required: true,
   },
 });
+
+const urlMovie = (id) => {
+  return "/movies/watch/" + id;
+};
+
+const mustLogin = () => {
+  $toast.open("You have to login to watch the movie");
+
+  setTimeout(() => {
+    window.location.href = "/login";
+  }, 2000);
+};
 </script>
 
 <template>
@@ -29,7 +46,7 @@ defineProps({
   <!-- Movie display -->
   <div class="bg-gray-800">
     <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8">
-      <div class="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center mb-16">
         <div>
           <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
             <span class="block">Watch movies and TV shows</span>
@@ -39,15 +56,11 @@ defineProps({
 
         <div class="w-full justify-between items-center gap-4">
           <div class="relative w-full h-96">
-            <div
-              id="screenshot-container"
-              class="absolute inset-0 flex items-center justify-center gap-4"
-            >
-              <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg">
-                <i class="fa-solid fa-image text-white fa-2xl"></i>
-              </div>
-              <p class="text-white text-lg font-semibold">Image not found</p>
-            </div>
+            <img
+              src="https://i.ytimg.com/vi/XFqn3uy238E/maxresdefault.jpg"
+              alt="movie"
+              class="w-full h-full object-cover rounded-lg"
+            />
           </div>
         </div>
       </div>
@@ -67,8 +80,16 @@ defineProps({
           />
           <h3 class="text-lg font-semibold">{{ movie.title }}</h3>
           <div class="absolute bottom-4 right-4">
-            <a :href="movie.video_url">
+            <a :href="urlMovie(movie.id)" v-if="canLogin">
               <button class="bg-blue-500 text-white px-4 py-2 rounded">
+                Watch Video
+              </button>
+            </a>
+            <a v-else>
+              <button
+                class="bg-blue-500 text-white px-4 py-2 rounded"
+                @click="mustLogin"
+              >
                 Watch Video
               </button>
             </a>

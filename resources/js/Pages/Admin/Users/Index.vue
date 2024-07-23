@@ -13,6 +13,10 @@ import {
   FwbButton,
 } from "flowbite-vue";
 import Pagination from "@/Components/Pagination.vue";
+import { useToast } from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
+
+const $toast = useToast();
 
 defineComponent({
   components: {
@@ -56,9 +60,14 @@ const deleteUser = async (id) => {
     const data = await response.json();
     if (data.success) {
       // Handle success, e.g., update UI or redirect
-      console.log("User deleted successfully.");
-      // Reload the page
-      location.reload();
+      window.location.reload();
+
+      let instance = $toast.success("User deleted successfully");
+      this.$toast.open({
+        message: "User deleted successfully",
+        type: "success",
+      });
+      $toast.clear();
     } else {
       // Handle failure
       console.error("Failed to delete user.");
@@ -84,7 +93,7 @@ const deleteUser = async (id) => {
         <div class="overflow-hidden sm:rounded-lg flex flex-col gap-2">
           <div class="flex justify-end">
             <a href="/admin/users/create">
-              <fwb-button color="default" >Add User</fwb-button>
+              <fwb-button color="default">Add User</fwb-button>
             </a>
           </div>
           <fwb-table>
@@ -106,10 +115,6 @@ const deleteUser = async (id) => {
                 <fwb-table-cell class="flex gap-2 justify-end">
                   <fwb-a href="#"> Edit </fwb-a>
                   <fwb-a href="#" @click="deleteUser(user.id)"> Delete </fwb-a>
-
-                  <form action="" @submit.prevent="submitDeleteForm">
-                    <input type="hidden" name="user_id" :value="user.id" />
-                  </form>
                 </fwb-table-cell>
               </fwb-table-row>
             </fwb-table-body>

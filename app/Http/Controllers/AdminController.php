@@ -16,8 +16,7 @@ class AdminController extends Controller
     public function index()
     {
       // get user movies with user name and movie title
-      $userMovies = UserMovie::with("user", "movie")->paginate(10);
-
+      $userMovies = UserMovie::with("user", "movie")->orderBy("created_at", "desc")->paginate(10);
       $user = Auth::check() ? Auth::user() : null;
 
         return Inertia::render("Admin/Index", [
