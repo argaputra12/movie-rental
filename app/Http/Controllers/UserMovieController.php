@@ -91,13 +91,9 @@ class UserMovieController extends Controller
   /**
    * Request approval for a movie
    */
-  public function request(Request $request)
+  public function request(string $id)
   {
-    $request->validate([
-      'movie_id' => 'required|integer',
-    ]);
-
-    $movie = Movie::find($request->movie_id);
+    $movie = Movie::find($id);
 
     if (!$movie) {
       return response()->json(["error" => "Movie not found"], 404);
